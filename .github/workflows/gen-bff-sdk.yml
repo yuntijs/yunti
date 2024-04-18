@@ -61,6 +61,7 @@ jobs:
           HOOKS_EXTRA_PARAM: tree
           HOOKS_EXTRA_PARAM_DEFAULT_VALUE: main
           SDK_RELEASE_TYPE: ${{ env.SDK_RELEASE_TYPE }}
+          CONFIG_USE_SWR_INFINITE: 'getPageCommits,getComponentCommits'
 
       - name: debug
         if: failure()

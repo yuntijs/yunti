@@ -40,6 +40,7 @@ docker run --rm --net=host --env SDK_PACKAGE_NAME=@yuntijs/yunti-bff-sdk \
   --env SDK_RELEASE_TYPE=${SDK_RELEASE_TYPE} \
   --env HOOKS_EXTRA_PARAM=${HOOKS_EXTRA_PARAM} \
   --env HOOKS_EXTRA_PARAM_DEFAULT_VALUE=${HOOKS_EXTRA_PARAM_DEFAULT_VALUE} \
+  --env CONFIG_USE_SWR_INFINITE=${CONFIG_USE_SWR_INFINITE} \
   -v ${SERVER_PATH}/src:/schema \
   -v ~/.npmrc:/root/.npmrc ${GRL_SDK_GENERATOR_IMAGE}
 
