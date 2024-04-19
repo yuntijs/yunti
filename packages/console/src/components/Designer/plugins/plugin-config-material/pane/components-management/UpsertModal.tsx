@@ -5,6 +5,7 @@ import { Form, Input, Modal, Radio, Select, Space, Typography } from 'antd';
 import React, { useEffect, useMemo, useState } from 'react';
 
 import { LowCodePackage } from '@/components/Designer/type';
+import { sdk } from '@/utils';
 
 const { Link } = Typography;
 
