@@ -108,9 +108,21 @@ export class ComponentsVersionsService {
    * @param {LccList} lccList 低码组件列表
    */
   async getLccListAssets(lccList: LccList, lccIdVersionMap: LccIdVersionMap = {}) {
-    const cvList = await Promise.all(
+    const method = 'getLccListAssets';
+    const cvListValues = await Promise.allSettled(
       lccList.map(({ id, version }) => this.getComponentVersionDetail(TREE_DEFAULT, id, version))
     );
+    const cvList = cvListValues
+      .filter((cvValue, index) => {
+        if (cvValue.status === 'fulfilled') {
+          return true;
+        }
+        this.logger.warn(
+          `[${method}] get ${lccList[index].id}@${lccList[index].version} failed => ${cvValue.reason}`
+        );
+        return false;
+      })
+      .map((cvValue: PromiseFulfilledResult<ComponentVersion>) => cvValue.value);
     const assets: IPublicTypeAssetsJson = {
       version: '1.1.0',
       packages: [],
