@@ -37,6 +37,13 @@ export class ComponentsVersionsService {
   getComponentsRepository = (tree: string) =>
     treeDataSources.getRepository<Component>(tree, Component);
 
+  sortVersions(versions: ComponentVersion[]) {
+    return semver
+      .sort(versions.map(({ version }) => version))
+      .reverse()
+      .map(version => versions.find(cv => cv.version === version));
+  }
+
   async listComponentVersions(tree: string, componentId: string) {
     const componentsVersonsRepository = await this.getComponentsVersonsRepository(tree);
     const componentVersions = await componentsVersonsRepository.find({
@@ -46,10 +53,8 @@ export class ComponentsVersionsService {
       // },
     });
 
-    return semver
-      .sort(componentVersions.map(({ version }) => version))
-      .reverse()
-      .map(version => componentVersions.find(cv => cv.version === version));
+    const sortedVersions = this.sortVersions(componentVersions);
+    return sortedVersions;
   }
 
   async getComponentVersion(tree: string, componentId: string, version: string) {

@@ -70,9 +70,10 @@ export class ComponentsService {
         versions: true,
       },
     });
-    if (!component.versions) {
-      component.versions = [];
+    if (!component) {
+      return null;
     }
+    component.versions = this.componentsVersionsService.sortVersions(component.versions || []);
     // @Todo 后面最好提供单独的字段获取资产，每次获取详情的时候都处理的话可能会导致加载速度变慢
     component.assets = await this.componentsVersionsService.improveAndSortAssets(component.assets);
     // @Todo 目前低代码组件的生命周期需要定义到 methods 中，否则无法执行
