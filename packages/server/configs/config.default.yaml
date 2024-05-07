@@ -29,7 +29,7 @@ db:
   password: yunti
   database: yunti
   logging: false
-  timezone: Z
+  # timezone: Z
   synchronize: false
   # yunti-server 与数据库建立的最大连接数
   maxDataSources: 200
