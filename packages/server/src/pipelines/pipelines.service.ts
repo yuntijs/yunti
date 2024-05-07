@@ -154,6 +154,13 @@ export class PipelinesService {
     }
     const labelSelector = `tekton.dev/pipeline=${pipeline}`;
     const listFn = () => k8s.pipelineRun.list(namespace, { labelSelector });
+    // list first, check if k8s client is available
+    try {
+      await listFn();
+    } catch (error) {
+      this.logger.warn(`[${method}] ⚠ list PipelineRun failed ⚠ => ${error.stack}`);
+      return;
+    }
     const { group, version, name } = k8s.pipelineRun;
     const prApiPath = `/apis/${group}/${version}/namespaces/${namespace}/${name}`;
     const informer = K8s.makeInformer(k8s.kubeConfig, prApiPath, listFn, labelSelector);

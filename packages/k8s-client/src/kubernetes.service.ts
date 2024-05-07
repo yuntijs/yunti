@@ -99,7 +99,7 @@ export class KubernetesService {
    *
    */
   async getSaClient() {
-    if (!this.k8sConfig.saToken) {
+    if (!this.k8sConfig?.saToken) {
       this.logger.warn('getSaClient', 'saToken is required');
       return;
     }
