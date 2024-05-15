@@ -362,7 +362,7 @@ utils.initSdkBase = function __initSdkBase() {
       query.tree = tree;
     }
     if (Object.keys(query).length > 0) {
-      url = `${host}?${qs.stringify(query)}`;
+      url = `${host}?${this.qs.stringify(query)}`;
     }
 
     const newClient = this.yuntiSDK.initGraphQLClient(url, requestConfig);
