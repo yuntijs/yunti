@@ -97,7 +97,8 @@ npm:
       proxy: false
   cdn:
     apiUrl: https://data.jsdelivr.com
-    mirror: https://jsd.onmicrosoft.cn
+    # mirror: https://jsd.onmicrosoft.cn/npm
+    mirror: http://dev-unpkg.tenxcloud.net
   unpkg: http://dev-unpkg.tenxcloud.net
 kubernetes:
   # k8s 集群配置

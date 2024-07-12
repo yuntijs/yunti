@@ -417,7 +417,7 @@ export class PackagesService {
     const { cdn, unpkg } = this.config.npm || {};
     const fullName = `${name}@${pkg.version}`;
     const isTenxPackage = this.isTenxPackage(name);
-    const cdnServer = isTenxPackage ? unpkg : `${cdn.mirror}/npm`;
+    const cdnServer = isTenxPackage ? unpkg : cdn.mirror;
     if (pkg.yunti) {
       const {
         umd: { library, entry, externals },
