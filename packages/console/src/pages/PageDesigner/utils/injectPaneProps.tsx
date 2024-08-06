@@ -8,6 +8,7 @@ import { PreviewModalInjectProps } from '@/components/Designer/plugins/plugin-pr
 import { getTreeById, initSdk, useSdk } from '@/utils';
 
 import { PaneInjectProps, PaneInjectPropsKeys } from '../../../components/Designer/type';
+import { saveSchema } from './helper';
 
 export const injectPaneProps = (
   Pane: React.FC<PaneInjectProps>,
@@ -82,7 +83,8 @@ export const injectPaneProps = (
 export const injectGitCommitPaneProps = (Pane: React.FC<GitCommitPaneInjectProps>) => {
   const PropsProviderWrapper: React.FC = props => {
     const { appId, pageId } = useMatch({ path: 'design/apps/:appId/pages/:pageId' })?.params || {};
-    const sdk = useSdk({ tree: getTreeById(appId) });
+    const tree = getTreeById(appId);
+    const sdk = useSdk({ tree });
     const res = sdk.useGetPageCommitsInfinite(
       (pageIndex, previousData) => {
         if (previousData && !previousData?.page?.commits?.hasNextPage) {
@@ -106,6 +108,7 @@ export const injectGitCommitPaneProps = (Pane: React.FC<GitCommitPaneInjectProps
       loadMore: () => setSize(size + 1),
       loadMoreLoading: !lastPaginedData,
       hasNextPage: hasNextPage === undefined ? true : hasNextPage,
+      saveSchema,
     };
     return <Pane {...props} {...injectProps} />;
   };

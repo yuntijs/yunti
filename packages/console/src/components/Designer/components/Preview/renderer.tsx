@@ -85,7 +85,7 @@ const Renderer: React.FC<RendererProps> = (props: RendererProps) => {
             }
             return createElement(Comp, viewProps, children);
           }}
-          locale={getLangInfo().i18nKey}
+          locale={getLangInfo()?.i18nKey}
           messages={projectSchema?.i18n || {}}
           schema={schema}
         />

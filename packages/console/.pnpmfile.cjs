@@ -7,7 +7,7 @@ function readPackage(pkg, context) {
   if (pkg.name === '@umijs/max') {
     pkg.dependencies = {
       ...pkg.dependencies,
-      "antd": "^5.1.5",
+      "antd": "^5.20.0",
     }
   }
 

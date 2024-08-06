@@ -19,7 +19,6 @@
   },
   "dependencies": {
     "@alilc/lowcode-datasource-engine": "^1.0.0",
-    "@formily/antd": "^2.1.4",
     "@formily/core": "^2.1.4",
     "@formily/react": "^2.1.4",
     "@tenx-ui/form-helper": "^0.0.2",

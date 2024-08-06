@@ -1,3 +1,4 @@
+import { IPublicModelPluginContext } from '@alilc/lowcode-types';
 import { Typography as Tpy } from '@tenx-ui/materials';
 import {
   Avatar,
@@ -30,6 +31,7 @@ export interface GitCommit {
 }
 
 export interface GitCommitPaneInjectProps {
+  ctx: IPublicModelPluginContext;
   /** 提交列表 */
   commits: GitCommit[];
   /** 首次加载 loading */
@@ -44,6 +46,8 @@ export interface GitCommitPaneInjectProps {
   hasNextPage: boolean;
   /** 提交输入框的空白提示 */
   commitInputPlaceholder?: string;
+  /** 保存 schema 的函数 */
+  saveSchema?: () => Promise<void>;
 }
 
 export type InjectGitCommitPanePropsFunc = (pane: React.FC) => React.FC<GitCommitPaneInjectProps>;
@@ -57,6 +61,7 @@ const { Text, Paragraph } = Typography;
 export const GitCommitPane: React.FC<GitCommitPaneInjectProps> = props => {
   const [form] = Form.useForm();
   const {
+    ctx,
     commits,
     loading,
     doCommit,
@@ -64,6 +69,7 @@ export const GitCommitPane: React.FC<GitCommitPaneInjectProps> = props => {
     loadMoreLoading,
     hasNextPage,
     commitInputPlaceholder,
+    saveSchema,
   } = props;
   const [btnLoading, setBtnLoading] = React.useState(false);
   const submitCommit = async () => {
@@ -74,12 +80,23 @@ export const GitCommitPane: React.FC<GitCommitPaneInjectProps> = props => {
       return;
     }
     setBtnLoading(true);
+    const lowcodeHistory = ctx?.project.getCurrentDocument()?.history;
+    const isSavePoint = lowcodeHistory?.isSavePoint();
+    // 如果存在未保存的内容，则先保存
+    if (isSavePoint) {
+      await saveSchema();
+      lowcodeHistory?.savePoint();
+    }
     try {
       await doCommit(message);
       form.resetFields();
       msg.success('提交成功');
-    } catch {
-      //
+    } catch (error) {
+      if (error.message?.includes('nothing to commit')) {
+        msg.info('无需提交');
+      } else {
+        msg.warning('提交失败');
+      }
     } finally {
       setBtnLoading(false);
     }

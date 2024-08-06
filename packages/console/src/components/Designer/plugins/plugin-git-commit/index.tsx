@@ -32,6 +32,7 @@ export const PluginGitCommit = (
           description: pluginTitle,
           align: 'bottom',
         },
+        contentProps: { ctx },
         content: injectPaneProps(GitCommitPane),
       });
     },

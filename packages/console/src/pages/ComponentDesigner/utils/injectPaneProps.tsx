@@ -8,6 +8,7 @@ import { PreviewModalInjectProps } from '@/components/Designer/plugins/plugin-pr
 import { getTreeById, initSdk, useSdk } from '@/utils';
 
 import { PaneInjectProps, PaneInjectPropsKeys } from '../../../components/Designer/type';
+import { saveSchema } from './helper';
 
 export const injectPaneProps = (
   Pane: React.FC<PaneInjectProps>,
@@ -84,7 +85,8 @@ export const injectPaneProps = (
 export const injectGitCommitPaneProps = (Pane: React.FC<GitCommitPaneInjectProps>) => {
   const PropsProviderWrapper: React.FC = props => {
     const { componentId } = useMatch({ path: 'design/components/:componentId' })?.params || {};
-    const sdk = useSdk({ tree: getTreeById(componentId) });
+    const tree = getTreeById(componentId);
+    const sdk = useSdk({ tree });
     const res = sdk.useGetComponentCommitsInfinite(
       (pageIndex, previousData) => {
         if (previousData && !previousData?.component?.commits?.hasNextPage) {
@@ -109,6 +111,7 @@ export const injectGitCommitPaneProps = (Pane: React.FC<GitCommitPaneInjectProps
       loadMoreLoading: !lastPaginedData,
       hasNextPage: hasNextPage === undefined ? true : hasNextPage,
       commitInputPlaceholder: `请填写提交信息，默认会带上 'Update component component-xxxxx: ' 的前缀 '`,
+      saveSchema,
     };
     return <Pane {...props} {...injectProps} />;
   };

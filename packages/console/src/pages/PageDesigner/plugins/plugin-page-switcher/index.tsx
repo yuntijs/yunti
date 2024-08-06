@@ -5,6 +5,7 @@ import type { GetAppQuery } from '@yuntijs/yunti-bff-sdk';
 import { Dropdown, MenuProps, Space, Typography } from 'antd';
 import React, { useEffect, useState } from 'react';
 
+import { message } from '@/layouts';
 import { TREE_DEFAULT, getTreeById, getTreeNames, useSdk } from '@/utils';
 
 import styles from './index.less';
@@ -47,6 +48,12 @@ const PageSwitcher: React.FC<PageSwitcherProps> = props => {
     props.config.props.ctx.skeleton.hidePanel('codeEditor');
     props.config.props.ctx.skeleton.hidePanel('outline-master-pane');
     props.config.props.ctx.skeleton.hidePanel('outline-backup-pane');
+    // 检查是否有未保存的内容
+    const doc = props.config.props.ctx.project.getCurrentDocument();
+    if (doc?.history.isSavePoint()) {
+      message.warning('当前页面还有未保存的内容，请保存后再切换页面', 3000);
+      return;
+    }
     setPage(data?.app?.pages?.find(p => p.id === key));
     history.push(`/design/apps/${appId}/pages/${key}`);
   };

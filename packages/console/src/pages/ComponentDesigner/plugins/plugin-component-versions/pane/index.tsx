@@ -69,13 +69,15 @@ const ComponentVersionsPane: React.FC = () => {
           setReleaseModalOpen(false);
         }}
         onRelease={async values => {
-          if (project.currentDocument.history.isSavePoint()) {
+          const doc = project.getCurrentDocument();
+          if (doc.history.isSavePoint()) {
             await saveSchema({
               success: () => {},
               failed: () => {
                 message.warning(`版本 ${values.version} 发布失败`);
               },
             });
+            doc.history.savePoint();
           }
           await sdk.releaseComponent({
             release: {

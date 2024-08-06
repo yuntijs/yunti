@@ -1,5 +1,5 @@
 import { event, project } from '@alilc/lowcode-engine';
-import { ArrayTable, Editable, FormButtonGroup, FormItem, Input, Submit } from '@formily/antd';
+import { ArrayTable, Editable, FormButtonGroup, FormItem, Input, Submit } from '@formily/antd-v5';
 import { ArrayField, createForm, onFormInputChange } from '@formily/core';
 import { FormProvider, createSchemaField } from '@formily/react';
 import { Input as AntdInput, Space, message } from 'antd';

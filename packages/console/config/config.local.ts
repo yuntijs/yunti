@@ -11,7 +11,8 @@
  */
 import { defineConfig } from '@umijs/max';
 
-const yuntiServer = 'http://localhost:8034/';
+// const yuntiServer = 'http://localhost:8034/';
+const yuntiServer = 'http://yunti.botnow.cn/';
 
 export default defineConfig({
   proxy: {

@@ -1,5 +1,5 @@
+import { Button } from '@alifd/next';
 import { IPublicModelPluginContext } from '@alilc/lowcode-types';
-import { Button } from 'antd';
 
 import PluginComponentVersions from '../plugin-component-versions';
 

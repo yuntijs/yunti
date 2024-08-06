@@ -37,16 +37,16 @@ export const setLang = (v: string) => {
 const ChangeLocale = () => {
   const langInfo = getLangInfo();
   return (
-    <Tooltip title={langInfo.tooltip}>
+    <Tooltip title={langInfo?.tooltip}>
       <Button
         onClick={() => {
-          setLang(langInfo.change);
+          setLang(langInfo?.change);
           window.location.reload();
         }}
         size="large"
         type="text"
       >
-        {langInfo.text}
+        {langInfo?.text}
       </Button>
     </Tooltip>
   );

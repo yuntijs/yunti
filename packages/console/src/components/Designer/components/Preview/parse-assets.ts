@@ -36,7 +36,7 @@ function genLowcodeComp(
         libraryMap,
         projectSchema: schema as unknown as DesignerProjectSchema,
         rendererName: 'LowCodeRenderer',
-        locale: getLangInfo().i18nKey,
+        locale: getLangInfo()?.i18nKey,
         messages: schema?.i18n || {},
         schema: schema?.componentsTree?.[0],
         components,
